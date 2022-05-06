@@ -10,6 +10,7 @@ import {
     ORDER_LIST_REQUEST,
     ORDER_LIST_SUCCESS,
 } from '../constants/orderConstants';
+import { URL } from '../url';
 import { userLogout } from './userActions';
 
 // GET ALL ORDERS
@@ -25,7 +26,7 @@ export const getListOrders = () => async (dispatch, getState) => {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        const { data } = await axios.get('/api/orders/all', config);
+        const { data } = await axios.get(`${URL}/api/orders/all`, config);
         dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
     } catch (error) {
         const message =
@@ -55,7 +56,7 @@ export const getOrderDetail = (id) => async (dispatch, getState) => {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        const { data } = await axios.get(`/api/orders/${id}`, config);
+        const { data } = await axios.get(`${URL}/api/orders/${id}`, config);
         dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
     } catch (error) {
         const message =
@@ -85,7 +86,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        const { data } = await axios.put(`/api/orders/${order._id}/delivered`, {}, config);
+        const { data } = await axios.put(`${URL}/api/orders/${order._id}/delivered`, {}, config);
         dispatch({ type: ORDER_DELIVERED_SUCCESS, payload: data });
     } catch (error) {
         const message =

@@ -8,12 +8,13 @@ import userRouter from './routes/userRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
 import router from './routes/getClientIDPaypal.js';
 import categoryRouter from './routes/categoryRoutes.js';
+import cors from 'cors';
 
 const app = express();
 dotenv.config();
 connectDatabase();
 app.use(express.json());
-
+app.use(cors());
 // API
 app.use('/api/import', ImportData);
 app.use('/api/products', productRouter);

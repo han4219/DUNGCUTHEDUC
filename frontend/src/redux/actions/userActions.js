@@ -17,6 +17,7 @@ import {
 import axios from "axios";
 import { ORDER_MY_LIST_RESET } from "../constants/orderConstants";
 import { CART_CLEAR_ITEMS } from "../constants/cartConstants";
+import { URL } from "../../url";
 
 //LOGIN
 export const userLogin = (email, password) => async (dispatch) => {
@@ -28,7 +29,7 @@ export const userLogin = (email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "/api/users/login",
+      `${URL}/api/users/login`,
       { email, password },
       config
     );
@@ -66,7 +67,7 @@ export const userRegister = (name, email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "/api/users",
+      `${URL}/api/users`,
       { name, email, password },
       config
     );
@@ -98,7 +99,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(`${URL}/api/users/${id}`, config);
     dispatch({ type: USER_DETAIL_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -129,7 +130,11 @@ export const updateProfile = (userUpdate) => async (dispatch, getState) => {
         Authorization: `Bearer ${user.token}`,
       },
     };
-    const { data } = await axios.put("/api/users/profile", userUpdate, config);
+    const { data } = await axios.put(
+      `${URL}/api/users/profile`,
+      userUpdate,
+      config
+    );
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     localStorage.setItem("user", JSON.stringify(data));

@@ -7,6 +7,7 @@ import Loading from "../components/LoadingError/Loading";
 import Navbar from "../components/Navbar/Navbar";
 import Rating from "../components/homeComponents/Rating";
 import { getProductByCategory } from "../redux/actions/categoryActions";
+import Footer from "../components/Footer";
 
 const CategoryProduct = ({ match }) => {
   const dispatch = useDispatch();
@@ -79,6 +80,7 @@ const CategoryProduct = ({ match }) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

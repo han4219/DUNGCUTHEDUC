@@ -16,6 +16,7 @@ import {
     PRODUCT_UPDATE_REQUEST,
     PRODUCT_UPDATE_SUCCESS,
 } from '../constants/productContants';
+import { URL } from '../url';
 import { userLogout } from './userActions';
 
 // GET ALL PRODUCTS
@@ -31,7 +32,7 @@ export const getListProducts = () => async (dispatch, getState) => {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        const { data } = await axios.get('/api/products/all', config);
+        const { data } = await axios.get(`${URL}/api/products/all`, config);
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
         const message =
@@ -61,7 +62,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        await axios.delete(`/api/products/${id}`, config);
+        await axios.delete(`${URL}/api/products/${id}`, config);
         dispatch({ type: PRODUCT_DELETE_SUCCESS });
     } catch (error) {
         const message =
@@ -95,7 +96,7 @@ export const createProduct =
                 },
             };
             const { data } = await axios.post(
-                `/api/products/`,
+                `${URL}/api/products/`,
                 { name, image, description, price, quantity, trademark, category },
                 config
             );
@@ -119,7 +120,7 @@ export const createProduct =
 export const editProduct = (id) => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_EDIT_REQUEST });
-        const { data } = await axios.get(`/api/products/${id}`);
+        const { data } = await axios.get(`${URL}/api/products/${id}`);
         dispatch({ type: PRODUCT_EDIT_SUCCESS, payload: data });
     } catch (error) {
         const message =
@@ -150,7 +151,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        const { data } = await axios.put(`/api/products/${product._id}`, product, config);
+        const { data } = await axios.put(`${URL}/api/products/${product._id}`, product, config);
         dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data });
     } catch (error) {
         const message =

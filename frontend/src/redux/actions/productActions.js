@@ -1,4 +1,5 @@
 import axios from "axios";
+import { URL } from "../../url";
 import {
   PRODUCT_CREATE_REVIEW_FAIL,
   PRODUCT_CREATE_REVIEW_REQUEST,
@@ -18,7 +19,7 @@ export const listProduct =
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
       const { data } = await axios.get(
-        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+        `${URL}/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
       );
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
@@ -36,7 +37,7 @@ export const listProduct =
 export const productDetail = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/products/${id}`);
+    const { data } = await axios.get(`${URL}/api/products/${id}`);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -65,7 +66,7 @@ export const addReview = (productID, review) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      `/api/products/${productID}/review`,
+      `${URL}/api/products/${productID}/review`,
       review,
       config
     );

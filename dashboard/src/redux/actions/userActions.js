@@ -10,6 +10,7 @@ import {
 } from '../constants/userConstants';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import URL from './../url';
 
 //LOGIN
 export const userLogin = (email, password) => async (dispatch) => {
@@ -26,7 +27,7 @@ export const userLogin = (email, password) => async (dispatch) => {
                 'Content-Type': 'application/json',
             },
         };
-        const { data } = await axios.post('/api/users/login', { email, password }, config);
+        const { data } = await axios.post(`${URL}/api/users/login`, { email, password }, config);
 
         if (!data.isAdmin) {
             toast.error('Bạn không phải quản trị viên', ToastObjects);
@@ -69,7 +70,7 @@ export const getListUsers = () => async (dispatch, getState) => {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        const { data } = await axios.get('/api/users', config);
+        const { data } = await axios.get(`${URL}/api/users`, config);
         dispatch({ type: USER_LIST_SUCCESS, payload: data });
     } catch (error) {
         const message =

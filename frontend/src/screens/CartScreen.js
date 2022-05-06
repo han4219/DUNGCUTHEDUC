@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Header from "./../components/Header";
+import Footer from "./../components/Footer";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "./../redux/actions/cartActions";
@@ -120,7 +121,7 @@ const CartScreen = ({ match, location, history }) => {
                   <span> </span>Tiếp tục mua sắm
                 </button>
               </Link>
-              {totalPrice > 0 && (
+              {totalPrice >= 0 && (
                 <div className="col-md-6 d-flex justify-content-md-end mt-3 mt-md-0">
                   <button onClick={handleCheckout}>
                     <Link to="/shipping" className="text-white">
@@ -134,6 +135,7 @@ const CartScreen = ({ match, location, history }) => {
           </>
         )}
       </div>
+      <Footer />
     </>
   );
 };

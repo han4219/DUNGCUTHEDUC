@@ -4,6 +4,7 @@ import {
     REVIEW_LIST_REQUEST,
     REVIEW_LIST_SUCCESS,
 } from '../constants/reviewConstants';
+import { URL } from '../url';
 import { userLogout } from './userActions';
 
 // GET ALL REVIEWS
@@ -19,7 +20,7 @@ export const getListReviews = () => async (dispatch, getState) => {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        const { data } = await axios.get('/api/products/reviews', config);
+        const { data } = await axios.get(`${URL}/api/products/reviews`, config);
         dispatch({ type: REVIEW_LIST_SUCCESS, payload: data });
     } catch (error) {
         const message =
