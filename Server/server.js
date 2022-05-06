@@ -15,6 +15,7 @@ dotenv.config();
 connectDatabase();
 app.use(express.json());
 app.use(cors());
+
 // API
 app.use('/api/import', ImportData);
 app.use('/api/products', productRouter);
@@ -27,11 +28,5 @@ app.use('/api/config/paypal', router);
 app.use(notFound);
 app.use(errorHandler);
 
-app.get('/', (req, res) => {
-    res.send('API is running...');
-});
-
 const PORT = process.env.PORT || 1000;
-app.listen(5000, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+app.listen(PORT, console.log(`Server is running on port ${PORT}`));
