@@ -19,6 +19,7 @@ userRouter.post(
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
+                status: user.status,
                 token: generateToken(user._id),
                 createdAt: user.createdAt,
             });
@@ -55,6 +56,7 @@ userRouter.post(
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
+                status: user.status,
                 token: generateToken(user._id),
             });
         } else {
@@ -76,6 +78,7 @@ userRouter.get(
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
+                status: user.status,
                 createdAt: user.createdAt,
             });
         } else {

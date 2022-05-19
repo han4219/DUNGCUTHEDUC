@@ -34,6 +34,8 @@ export const userLogin = (email, password) => async (dispatch) => {
       config
     );
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+    console.log(data);
+    console.log(data.status);
 
     localStorage.setItem("user", JSON.stringify(data));
   } catch (error) {
