@@ -20,7 +20,9 @@ const OrderScreen = ({ match }) => {
   const { load, order, error } = orderDetails;
   const orderPay = useSelector((state) => state.orderPay);
   const { load: loadPay, success: successPay } = orderPay;
-
+  const dollar = (price) => {
+    return (price * 0.000042).toFixed(2);
+  };
   if (!load) {
     order.itemsPrice = order.orderItems.reduce(
       (acc, item) => acc + item.price * item.qty,
@@ -237,21 +239,28 @@ const OrderScreen = ({ match }) => {
                     </tr>
                   </tbody>
                 </table>
-                {!order.isPaid && (
-                  <div className="col-12">
-                    {loadPay && <Loading />}
-                    {!sdkReady ? (
-                      <Loading />
-                    ) : (
-                      <PayPalButton
-                        amount={order.totalPrice}
-                        onSuccess={(paymentResult) =>
-                          successPaymentHandler(paymentResult)
-                        }
-                      />
-                    )}
-                  </div>
-                )}
+                {!order.isPaid &&
+                  (order.paymentMethod === "PayPal" ? (
+                    <div className="col-12">
+                      {loadPay && <Loading />}
+                      {!sdkReady ? (
+                        <Loading />
+                      ) : (
+                        <PayPalButton
+                          amount={dollar(order.totalPrice)}
+                          onSuccess={(paymentResult) =>
+                            successPaymentHandler(paymentResult)
+                          }
+                        />
+                      )}
+                    </div>
+                  ) : order.paymentMethod === "Cash" ? (
+                    <div className="col-12">
+                      Vui lòng thanh toán khi nhận hàng
+                    </div>
+                  ) : (
+                    ""
+                  ))}
               </div>
             </div>
           </>

@@ -165,7 +165,7 @@ const Header = () => {
                     </button>
                     <div className="dropdown-menu">
                       <Link className="dropdown-item" to="/profile">
-                        Profile
+                        Thông tin
                       </Link>
 
                       <Link

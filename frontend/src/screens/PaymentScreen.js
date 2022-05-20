@@ -40,10 +40,23 @@ const PaymentScreen = ({ history }) => {
                 type="radio"
                 value="PayPal"
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                id="method"
+                id="paypal"
+                name="method"
               />
-              <label className="form-check-label" htmlFor="method">
+              <label className="form-check-label" htmlFor="paypal">
                 PayPal hoặc Credit Card
+              </label>
+              <br />
+              <input
+                className="form-check-input"
+                type="radio"
+                value="Cash"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                id="cash"
+                name="method"
+              />
+              <label className="form-check-label" htmlFor="cash">
+                Thanh toán khi nhận hàng
               </label>
             </div>
           </div>

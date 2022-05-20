@@ -1,4 +1,10 @@
 import {
+    USER_CHANGE_STATUS_FAIL,
+    USER_CHANGE_STATUS_REQUEST,
+    USER_CHANGE_STATUS_SUCCESS,
+    USER_DELETE_FAIL,
+    USER_DELETE_REQUEST,
+    USER_DELETE_SUCCESS,
     USER_LIST_FAIL,
     USER_LIST_REQUEST,
     USER_LIST_RESET,
@@ -82,6 +88,66 @@ export const getListUsers = () => async (dispatch, getState) => {
         }
         dispatch({
             type: USER_LIST_FAIL,
+            payload: message,
+        });
+    }
+};
+
+//Delete
+export const deleteUser = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: USER_DELETE_REQUEST });
+        const {
+            userLogin: { user },
+        } = getState();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        await axios.delete(`${URL}/api/users/${id}`, config);
+
+        dispatch({ type: USER_DELETE_SUCCESS });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed.') {
+            dispatch(userLogout());
+        }
+        dispatch({
+            type: USER_DELETE_FAIL,
+            payload: message,
+        });
+    }
+};
+
+// change user status
+export const changeStatus = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: USER_CHANGE_STATUS_REQUEST });
+        const {
+            userLogin: { user },
+        } = getState();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        await axios.put(`${URL}/api/users/change-status/${id}`, config);
+
+        dispatch({ type: USER_CHANGE_STATUS_SUCCESS });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed.') {
+            dispatch(userLogout());
+        }
+        dispatch({
+            type: USER_CHANGE_STATUS_FAIL,
             payload: message,
         });
     }
