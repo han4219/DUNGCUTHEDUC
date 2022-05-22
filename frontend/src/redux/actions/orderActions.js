@@ -33,6 +33,12 @@ export const createOrder = (order) => async (dispatch, getState) => {
     };
     const { data } = await axios.post(`${URL}/api/orders`, order, config);
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data });
+    // handle count product in stock...
+    order.orderItems.forEach(async (item) => {
+      await axios.put(`${URL}/api/products/change-quantity/${item.product}`, {
+        count: item.qty,
+      });
+    });
     dispatch({ type: CART_CLEAR_ITEMS });
 
     localStorage.removeItem("cartItems");

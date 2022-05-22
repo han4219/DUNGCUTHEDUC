@@ -212,4 +212,20 @@ productRouter.get(
     })
 );
 
+// update product count in stock
+productRouter.put(
+    '/change-quantity/:id',
+    asyncHandler(async (req, res) => {
+        const product = await Product.findById(req.params.id);
+        if (product) {
+            product.quantity = product.quantity - req.body.count;
+            const updateProduct = await product.save();
+            res.json({ updateProduct });
+        } else {
+            res.status(404);
+            throw new Error('Không tìm thấy sản phẩm');
+        }
+    })
+);
+
 export default productRouter;
